@@ -1,0 +1,51 @@
+
+*findbacklinks.txt*       For Neovim 0.9+        *FindBacklinks*
+
+===============================================================================
+FINDBACKLINKS - A Telescope extension for finding backlinks in markdown notes
+===============================================================================
+
+Author: Conny Holm <your-email@example.com>
+Repository: https://github.com/cjeholm/findbacklinks
+
+===============================================================================
+COMMANDS
+===============================================================================
+
+:FindBacklinks
+    Opens a Telescope window displaying all notes that link to the current note.
+    Uses ripgrep (rg) to search for wikilinks (`[[example-title]]` format).
+
+===============================================================================
+SETUP
+===============================================================================
+
+1. Install with Lazy.nvim:
+>
+    {
+        "cjeholm/findbacklinks",
+        config = function()
+            require("findbacklinks")
+        end,
+        lazy = false,
+    }
+
+2. Ensure ripgrep (`rg`) and bat is installed on your system.
+
+3. Open a markdown file and run:
+>
+    :FindBacklinks
+
+===============================================================================
+MAPPING (OPTIONAL)
+===============================================================================
+
+To map `FindBacklinks` to a key:
+>
+    vim.keymap.set("n", "<leader>fb", "<cmd>FindBacklinks<cr>", { desc = "Find Backlinks" })
+
+===============================================================================
+LICENSE
+===============================================================================
+
+GPL-3 License. See repository for details.
