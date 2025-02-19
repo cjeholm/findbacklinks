@@ -3,16 +3,16 @@ local M = {}
 -- findbacklinks by cjeholm
 --
 local function get_first_h1()
-    local lines = vim.fn.readfile(vim.fn.expand("%"))
-    for _, line in ipairs(lines) do
-        local title = line:match("^#%s(.+)")
-        if title then
-            -- Convert to lowercase and replace spaces with dashes
-            title = title:lower():gsub("%s+", "-")
-            return title
-        end
-    end
-    return nil
+	local lines = vim.fn.readfile(vim.fn.expand("%"))
+	for _, line in ipairs(lines) do
+		local title = line:match("^#%s(.+)")
+		if title then
+			-- Convert to lowercase and replace spaces with dashes
+			title = title:lower():gsub("%s+", "-")
+			return title
+		end
+	end
+	return nil
 end
 
 M.find_backlinks = function()
@@ -60,9 +60,11 @@ M.find_backlinks = function()
 						vim.api.nvim_command("new " .. file)
 						vim.api.nvim_win_set_cursor(0, { tonumber(line), 0 })
 					end
-          if picker then
-					  actions.close(prompt_bufnr)
-          end
+					if picker then
+						actions.close(prompt_bufnr)
+					end
+					-- Exit insert mode
+					vim.api.nvim_command("stopinsert")
 				end
 				map("i", "<CR>", open_link)
 				map("n", "<CR>", open_link)
@@ -70,9 +72,6 @@ M.find_backlinks = function()
 			end,
 		})
 		:find()
-  --
-    -- Exit insert mode
-    vim.api.nvim_command("stopinsert")
 end
 
 vim.api.nvim_create_user_command("FindBacklinks", M.find_backlinks, {})
