@@ -1,5 +1,5 @@
 
-*findbacklinks.txt*       For Neovim 0.9+        *FindBacklinks*
+*findbacklinks*       For Neovim 0.9+        *FindBacklinks*
 
 ===============================================================================
 FINDBACKLINKS - A Telescope extension for finding backlinks in markdown notes
