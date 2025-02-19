@@ -1,5 +1,8 @@
 local M = {}
 
+
+
+
 local function get_first_h1()
     local lines = vim.fn.readfile(vim.fn.expand("%"))
     for _, line in ipairs(lines) do
@@ -55,6 +58,7 @@ M.find_backlinks = function()
 					local selection = action_state.get_selected_entry()
 					if selection then
 						local file, line = selection[1]:match("^(.-):(%d+):")
+						-- vim.cmd("edit " .. file)
 						vim.api.nvim_command("new " .. file)
 						vim.api.nvim_win_set_cursor(0, { tonumber(line), 0 })
 					end
