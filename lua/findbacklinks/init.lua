@@ -59,7 +59,7 @@ M.find_backlinks = function()
 						local file, line = selection[1]:match("^(.-):(%d+):")
 						vim.api.nvim_command("new " .. file)
 						vim.api.nvim_win_set_cursor(0, { tonumber(line), 0 })
-            vim.api.nvim_command("stopinsert"
+            vim.api.nvim_command("stopinsert")
 					end
           if picker then
 					  actions.close(prompt_bufnr)
