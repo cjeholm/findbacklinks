@@ -60,7 +60,9 @@ M.find_backlinks = function()
 						vim.api.nvim_command("new " .. file)
 						vim.api.nvim_win_set_cursor(0, { tonumber(line), 0 })
 					end
-					actions.close(prompt_bufnr)
+          if picker than
+					  actions.close(prompt_bufnr)
+          end
 				end
 				map("i", "<CR>", open_link)
 				map("n", "<CR>", open_link)
