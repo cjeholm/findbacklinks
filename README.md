@@ -1,6 +1,8 @@
 # findbacklinks
 
-A Telescope extension for finding backlinks in markdown notes
+A Telescope extension for finding backlinks in markdown notes.
+
+For Zettelkasten and other methods.
 
 `:FindBacklinks`
     Opens a Telescope window displaying all notes that link to the current note.
