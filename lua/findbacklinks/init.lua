@@ -70,6 +70,9 @@ M.find_backlinks = function()
 			end,
 		})
 		:find()
+  --
+    -- Exit insert mode
+    vim.api.nvim_command("stopinsert")
 end
 
 vim.api.nvim_create_user_command("FindBacklinks", M.find_backlinks, {})
