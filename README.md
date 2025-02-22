@@ -17,7 +17,7 @@ For Zettelkasten and other methods.
         config = function()
             require("findbacklinks")
         end,
-        lazy = false,
+        lazy = true,
     }
     ```
 
