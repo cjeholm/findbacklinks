@@ -15,6 +15,7 @@ local function get_first_h1()
     return nil
 end
 
+-- Function to find incoming links to the current file
 M.find_backlinks = function()
 	local title = get_first_h1()
 	if not title then
