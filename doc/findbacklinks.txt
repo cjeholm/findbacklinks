@@ -16,6 +16,9 @@ COMMANDS
     Opens a Telescope window displaying all notes that link to the current note.
     Uses ripgrep (rg) to search for wikilinks (`[[example-title]]` format).
 
+:FindOutlinks
+    Same as above, for outgoing links to other notes.
+
 ===============================================================================
 SETUP
 ===============================================================================
@@ -35,6 +38,8 @@ SETUP
 3. Open a markdown file and run:
 >
     :FindBacklinks
+    or
+    :FindOutlinks
 
 ===============================================================================
 MAPPING (OPTIONAL)
@@ -42,7 +47,8 @@ MAPPING (OPTIONAL)
 
 To map `FindBacklinks` to a key:
 >
-    vim.keymap.set("n", "<leader>fb", "<cmd>FindBacklinks<cr>", { desc = "Find Backlinks" })
+    vim.keymap.set("n", "<leader>gb", "<cmd>FindBacklinks<cr>", { desc = "Find Backlinks" })
+    vim.keymap.set("n", "<leader>go", "<cmd>FindOutlinks<cr>", { desc = "Find Outgoing links" })
 
 ===============================================================================
 LICENSE
