@@ -73,6 +73,78 @@ M.find_backlinks = function()
 		:find()
 end
 
+-- Function to find outgoing links in the current file
+M.find_outlinks = function()
+    local lines = vim.fn.readfile(vim.fn.expand("%"))
+    local links = {}
+
+    -- Extract wikilinks [[example]]
+    for _, line in ipairs(lines) do
+        for link in line:gmatch("%[%[(.-)%]%]") do
+            -- Convert to lowercase and replace spaces with dashes
+            local formatted_link = link:lower():gsub("%s+", "-")
+            table.insert(links, formatted_link)
+        end
+    end
+
+    if #links == 0 then
+        print("No outgoing links found!")
+        return
+    end
+
+    local pickers = require("telescope.pickers")
+    local finders = require("telescope.finders")
+    local previewers = require("telescope.previewers")
+    local sorters = require("telescope.config").values.generic_sorter
+    local actions = require("telescope.actions")
+    local action_state = require("telescope.actions.state")
+
+    pickers
+        .new({}, {
+            prompt_title = "Outgoing Links",
+            finder = finders.new_table({
+                results = links,
+                entry_maker = function(entry)
+                    return {
+                        value = entry,
+                        display = entry,
+                        ordinal = entry,
+                        filename = entry .. ".md", -- Assumes filenames match the link format
+                    }
+                end,
+            }),
+            sorter = sorters({}),
+            previewer = previewers.new_buffer_previewer({
+                define_preview = function(self, entry)
+                    local file = entry.filename
+                    if file and vim.fn.filereadable(file) == 1 then
+                        vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, vim.fn.readfile(file))
+                    else
+                        vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, { "File not found: " .. (file or "nil") })
+                    end
+                end,
+            }),
+            attach_mappings = function(prompt_bufnr, map)
+                local open_link = function()
+                    local selection = action_state.get_selected_entry()
+                    if selection then
+                        local file = selection.filename
+                        vim.api.nvim_command("new " .. file)
+                        vim.api.nvim_command("stopinsert")
+                    end
+                    if picker then
+                      actions.close(prompt_bufnr)
+                    end
+                end
+                map("i", "<CR>", open_link)
+                map("n", "<CR>", open_link)
+                return true
+            end,
+        })
+        :find()
+end
+
 vim.api.nvim_create_user_command("FindBacklinks", M.find_backlinks, {})
+vim.api.nvim_create_user_command("FindOutlinks", M.find_outlinks, {})
 
 return M
